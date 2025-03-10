@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Listen to the Future</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="tabs.css">
+    <link rel="stylesheet" href="future.css">
+
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.js"></script>
+</head>
+<body>
+
+    <!-- 标题 -->
+    <header>
+        <div class="header-container">
+            <h1 class="header-title">Listen to the Future</h1>
+            <!-- Tab 选项卡 -->
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab-button" onclick="window.location.href='index.html'">Past & Present Sound</button>
+                    <button class="tab-button" onclick="window.location.href='future.html'">Listen to the Future</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 未来页面的地图和时间轴 -->
+    <div class="main-container">
+        <div class="full-width-container">
+            <div id="map"></div>
+            <div class="timeline-container">
+                <button id="playPauseBtn" class="play-btn">▶ Play</button>
+                <div class="slider-wrapper">
+                    <span id="min-year">2015</span>
+                    <div class="slider-container">
+                        <input type="range" id="timeline" min="2015" max="2024" step="1" value="2015">
+                        <div class="year-label-container">
+                            <span class="year-text">Current Year:</span>
+                            <span id="current-year" class="year-label">2015</span>
+                        </div>
+                    </div>
+                    <span id="max-year">2024</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入 JavaScript -->
+    <script src="future.js"></script>
+</body>
+</html>

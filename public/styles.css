@@ -1,0 +1,313 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.header-container {
+  display: flex;
+  justify-content:space-between;  
+  align-items: center;
+  padding: 0 20px;
+  height: 60px;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #ddd;
+}
+
+.header-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  margin: 0;
+}
+
+
+
+/* 主体布局：左侧（地图+时间轴） + 右侧（数据选择） */
+.main-container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* 左侧容器（地图 + 时间轴） */
+.left-container {
+    display: flex;
+    flex-direction: column;
+    flex: 7; /* 左侧占 7/9 */
+}
+
+/* 地图区域 */
+
+#map {
+  flex: 1;  /* 让地图填充可用空间 */
+  width: 100%;
+  min-height: 500px;  /* 避免被压缩 */
+  height: calc(100vh - 220px); /* 220px 预留 header 和 timeline */
+  background-color: lightgray;
+}
+
+
+/* 右侧数据选择区域 */
+.control-panel {
+    flex: 2; /* 右侧占 2/9 */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-left: 2px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 100vh;
+}
+
+.control-panel h2 {
+  font-size: 20px; /* 修改 .control-panel 里的 h2 字号 */
+}
+
+
+
+/* 选择框样式 */
+#data-type {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* icon区域  */
+.audio-icons{
+  display: flex;
+  flex-direction: column;
+  margin-top: 150px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.audio-row {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* 让 icon 和按钮之间有间距 */
+  justify-content: flex-start; /* 让内容靠左 */
+  width: 100%;
+  margin-bottom: 5px;
+}
+.audio-icons button {
+    background: none; /* 去除默认背景 */
+    border: none;     /* 去除默认边框 */
+    cursor: pointer;  /* 鼠标悬停时显示手形光标 */
+}
+.icon{
+  width: 32px;
+  height: 32px;
+}
+
+
+
+
+
+
+
+/* ----------------------------
+   时间轴整体容器 
+   ---------------------------- */
+   .timeline-container {
+    display: flex;                /* 让播放按钮 + slider-wrapper 横向排列 */
+    align-items: center;          /* 在垂直方向居中 */
+    gap: 15px;                    /* 播放按钮和 slider-wrapper 之间留 15px */
+    padding: 10px 20px;
+    background: white;
+    border-top: 2px solid #ddd;
+    height: 120px;                /* 保证有足够高度显示悬浮的年份标签 */
+    box-sizing: border-box; 
+    justify-content: center;      /* 避免 padding 影响内部尺寸计算 */
+  }
+  
+  /* 播放按钮 */
+  .play-btn {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    min-width: 70px;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+  }
+  
+  /* ----------------------------
+     slider-wrapper：左侧年份 + 滑块 + 右侧年份
+     ---------------------------- */
+  
+   .slider-wrapper {
+    display: flex;               
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    max-width: 600px;
+    width: 100%; 
+  } 
+  
+  
+  /* 左右年份标签 */
+  #min-year,
+  #max-year {
+    width: 40px;                /* 让它稍微固定一下宽度 */
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  /* ----------------------------
+     slider-container：实际放 range input 和悬浮的年份标签
+     ---------------------------- */
+  .slider-container {
+    position: relative;  /* 便于内部做绝对定位 */
+    flex: 1;             /* 自己再伸缩，确保滑块可以拉伸 */
+  }
+  
+  /* range 本身 */
+  #timeline {
+    width: 100%;
+    -webkit-appearance: none; /* 去掉默认外观 */
+    appearance: none;
+    background: #ccc;         /* 让没选中部分显示灰 */
+    height: 6px;             
+    border-radius: 5px;
+    outline: none;
+    margin: 0;
+    cursor: pointer;
+  }
+  
+  /* WebKit 内核的轨道（已去掉默认外观后，需要自定义） */
+  #timeline::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: #007BFF;   /* 已选部分（走过的轨道） */
+    border-radius: 5px;
+  }
+  
+  /* WebKit 内核的小圆点 */
+  #timeline::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px;  /* 让小圆点跟轨道上下居中 */
+  }
+  
+  /* Firefox 的轨道和小圆点 */
+  #timeline::-moz-range-track {
+    height: 6px;
+    background: #007BFF;
+    border-radius: 5px;
+  }
+  #timeline::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;  /* 去掉可能出现的默认边框 */
+    margin-top: -4px;
+  }
+  
+  /* ----------------------------
+     年份标签容器：悬浮在滑块上方
+     ---------------------------- */
+  .year-label-container {
+    position: absolute;
+    bottom: 100%;            /* 贴在输入控件上方 */
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 3px 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 30px;                /* “当前年份”文字与数字之间留一点空隙 */
+    z-index: 9999;
+  }
+  
+  /* “当前年份：” */
+  .year-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+  }
+  
+  /* 显示年份的蓝色标签 */
+  .year-label {
+    background: #007BFF;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 60px;
+    text-align: center;
+  }
+ 
+  
+/* legend */
+.map-legend {
+  position: absolute;
+  bottom: 120px;  /* 调整到地图左下角 */
+  /* left: 10px; */
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  font-size: 15px;
+  z-index: 1000; /* 确保 legend 在地图上层 */
+  width: 180px;
+}
+
+.legend-title {
+  /* font-weight: bold; */
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.legend-gradient {
+  width: 100%;
+  height: 15px;
+  background: linear-gradient(to right, #FFE4B5, #FFA07A, #FF0000); /* 渐变颜色 */
+  border-radius: 3px;
+}
+
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* 新增 No Data 样式 */
+.legend-no-data {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.no-data-box {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: white; /* 设为白色 */
+  margin-right: 8px;
+  border-radius: 3px;
+  border: 1px solid #aaa; /* 加边框让白色可见 */
+}

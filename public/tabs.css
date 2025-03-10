@@ -1,0 +1,26 @@
+
+
+.tab-button {
+    color: aliceblue;
+    font-family:'Arial Black', sans-serif;
+    padding: 8px 10px;
+    border: none;
+    background-color: #007BFF;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+.tabs-container {
+    display: flex;
+    justify-content: flex-end; /* 让 tabs 靠最右 */
+    align-items: center;
+    width: 100%;
+    padding-right: 0px; /* 适当调整右侧间距 */
+}
+
+.tabs {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}

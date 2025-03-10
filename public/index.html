@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Interactive Map</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="tabs.css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.js"></script>
+</head>
+<body>
+
+    <!-- 标题 -->
+    <header>
+        <div class="header-container">
+            <h1 class="header-title">Poverty or Social Exclusion (EU)</h1>
+            <!-- Tab 选项卡 -->
+            <div class="tabs-container"> 
+                <div class="tabs">
+                    <button class="tab-button" onclick="window.location.href='index.html'">Past & Present Sound</button>
+                    <button class="tab-button" onclick="window.location.href='future.html'">Listen to the Future</button>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+
+    <!-- 主体布局：左侧（地图+时间轴） | 右侧（数据选择） -->
+    <div class="main-container">
+        <div class="left-container">
+            <div id="map"></div>
+            <div id="legend" class="map-legend">
+                <div class="legend-title">Poverty or<br>Social Exclusion (%)</div>
+                <div class="legend-gradient"></div>
+                <div class="legend-labels">
+                    <span>Low</span>
+                    <span>High</span>
+                </div>
+                <div class="legend-no-data">
+                    <span class="no-data-box"></span> No Data
+                </div>
+            </div>
+            <div class="timeline-container">
+                <button id="playPauseBtn" class="play-btn">▶ Play</button>
+                <div class="slider-wrapper">
+                    <span id="min-year">2015</span>
+                    <div class="slider-container">
+                        <input type="range" id="timeline" min="2015" max="2024" step="1" value="2015">
+                        <div class="year-label-container">
+                            <span class="year-text">Current Year:</span>
+                            <span id="current-year" class="year-label">2015</span>
+                        </div>
+                    </div>
+                    <span id="max-year">2024</span>
+                </div>
+            </div>
+        </div>
+        <div class="control-panel">
+            <h2>View Different Groups</h2>
+            <label for="data-type">Select Group:</label>
+            <select id="data-type">
+                <option value="total" selected>Total</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+            </select>
+            <div class="audio-icons">
+                <div class="audio-row">
+                    <img src="src/female.png" alt="female" class="gender-icon">
+                    <button id="sound1-btn" type="button">
+                        <img src="src/icon1.png" alt="Sound 1" class="icon">
+                    </button>
+                </div>
+                <div class="audio-row">
+                    <img src="src/male.png" alt="male" class="gender-icon">
+                    <button id="sound2-btn" type="button">
+                        <img src="src/icon1.png" alt="Sound 2" class="icon">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 音频文件 -->
+    <audio id="sound1" src="src/sound1.wav"></audio>
+    <audio id="sound2" src="src/sound2.wav"></audio>
+    
+    <!-- 引入 JavaScript -->
+    <script src="sex_basic.js"></script>
+</body>
+</html>
