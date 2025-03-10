@@ -311,3 +311,34 @@ html, body {
   border-radius: 3px;
   border: 1px solid #aaa; /* 加边框让白色可见 */
 }
+
+
+.background-sound-container {
+  position: relative;
+  top: 20px; /* 控制下移的距离 */
+  text-align: center;
+  font-size: 14px;
+}
+
+.toggle-btn {
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007BFF !important;  /* 确保背景色生效 */
+  color: white;
+  margin-top: 5px;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* 关闭状态的按钮（Turn Off） */
+.toggle-btn.off {
+  background-color: #888 !important;  /* 确保灰色生效 */
+}
+
+/* 鼠标悬停效果 */
+.toggle-btn:hover {
+  background-color: #0056b3 !important; /* 更深的蓝色 */
+}

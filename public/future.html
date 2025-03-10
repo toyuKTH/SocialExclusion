@@ -16,7 +16,7 @@
     <!-- 标题 -->
     <header>
         <div class="header-container">
-            <h1 class="header-title">Listen to the Future</h1>
+            <h1 class="header-title">No Poverty or Social Exclusion (EU)</h1>
             <!-- Tab 选项卡 -->
             <div class="tabs-container">
                 <div class="tabs">
@@ -27,26 +27,20 @@
         </div>
     </header>
 
-    <!-- 未来页面的地图和时间轴 -->
+    <!-- 未来页面的地图和播放按钮 -->
     <div class="main-container">
         <div class="full-width-container">
             <div id="map"></div>
             <div class="timeline-container">
+                <!-- 播放按钮 -->
                 <button id="playPauseBtn" class="play-btn">▶ Play</button>
-                <div class="slider-wrapper">
-                    <span id="min-year">2015</span>
-                    <div class="slider-container">
-                        <input type="range" id="timeline" min="2015" max="2024" step="1" value="2015">
-                        <div class="year-label-container">
-                            <span class="year-text">Current Year:</span>
-                            <span id="current-year" class="year-label">2015</span>
-                        </div>
-                    </div>
-                    <span id="max-year">2024</span>
-                </div>
+                <span class="year-label">From 2030 to the Future</span>
             </div>
         </div>
     </div>
+
+    <!-- 音频文件 -->
+    <audio id="futureSound" src="src/future_sound.mp3"></audio>
 
     <!-- 引入 JavaScript -->
     <script src="future.js"></script>

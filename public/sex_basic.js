@@ -338,3 +338,25 @@ document.addEventListener("DOMContentLoaded",function(){
     })
     .catch(error => console.error("加载失败",error));
 })
+
+document.addEventListener("DOMContentLoaded", function () {
+    const bgSoundToggleBtn = document.getElementById("bgToggle");
+    const backgroundSound = document.getElementById("backgroundSound");
+    
+    let isBgSoundOn = false; // 初始状态是关闭
+
+    bgSoundToggleBtn.addEventListener("click", function () {
+        if (!isBgSoundOn) {
+            backgroundSound.play();
+            bgSoundToggleBtn.textContent = "Turn Off";
+            bgSoundToggleBtn.classList.remove("off");
+        } else {
+            backgroundSound.pause();
+            bgSoundToggleBtn.textContent = "Turn On";
+            bgSoundToggleBtn.classList.add("off");
+        }
+        isBgSoundOn = !isBgSoundOn;
+    });
+});
+
+
