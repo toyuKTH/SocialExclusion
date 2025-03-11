@@ -84,20 +84,24 @@ s.waitForBoot({
 
 
 	 // ✅ 监听 OSC 消息，控制背景音乐播放/停止
-    OSCdef(\background_control, { |msg|
-        var command = msg[1].asSymbol;  // 解析前端发送的命令
-        command.postln; // 打印接收到的命令
+   OSCdef(\background_control, { |msg|
+    var command = msg[1].asSymbol;
+    command.postln;  // 打印收到的命令
 
-        if (command == \play) {
-            Ndef(\drops).play;
-            "▶️ 背景音乐播放".postln;
-        } {
-            if (command == \stop) {
-                Ndef(\drops).stop;
-                "⏹ 背景音乐停止".postln;
-            };
+    if (command == \play) {
+        "▶️ 重新播放背景音乐".postln;
+        Ndef(\drops).clear; // 清除之前的 Ndef，确保可以重新启动
+        Ndef(\drops, { |bufnum=0, rate=1, amp=0.5|
+            PlayBuf.ar(1, bufnum, rate, loop: 1, doneAction: Done.freeSelf) * amp ! 2;
+        }).set(\bufnum, b.bufnum).play;
+    } {
+        if (command == \stop) {
+            "⏹ 停止背景音乐".postln;
+            Ndef(\drops).stop;
+            Ndef(\drops).clear; // 释放资源，确保下次 `play` 能重新创建
         };
-    }, '/background_control');
+    };
+}, '/background_control');
 
     "✅ SuperCollider 服务器已启动，等待 OSC 消息...".postln;
 
