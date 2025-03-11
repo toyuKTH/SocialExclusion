@@ -35,6 +35,19 @@ wss.on('connection', (ws) => {
     ws.on('message', (message) => {
         try {
             const data = JSON.parse(message);
+            if (data.type === "background_control") {
+                const command = data.command; // "play" or "stop"
+                console.log(` 背景音乐控制: ${command}`);
+
+                // 发送 OSC 消息到 SuperCollider
+                udpPort.send({
+                    address: "/background_control",
+                    args: [command]
+                }, "127.0.0.1", 57120);
+                return; // **跳过下面的国家数据逻辑**
+            }
+
+
             const {country, year, group} = data;
             console.log(` 收到国家: ${data.country},年份：${year},群体：${group}`);
 

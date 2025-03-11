@@ -125,7 +125,7 @@ html, body {
     padding: 10px 20px;
     background: white;
     border-top: 2px solid #ddd;
-    height: 120px;                /* 保证有足够高度显示悬浮的年份标签 */
+    height: 150px;                /* 保证有足够高度显示悬浮的年份标签 */
     box-sizing: border-box; 
     justify-content: center;      /* 避免 padding 影响内部尺寸计算 */
   }
@@ -263,7 +263,7 @@ html, body {
 /* legend */
 .map-legend {
   position: absolute;
-  bottom: 120px;  /* 调整到地图左下角 */
+  bottom: 150px;  /* 调整到地图左下角 */
   /* left: 10px; */
   background: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -341,4 +341,42 @@ html, body {
 /* 鼠标悬停效果 */
 .toggle-btn:hover {
   background-color: #0056b3 !important; /* 更深的蓝色 */
+}
+
+
+/*-----调整时间间隔区域----------*/
+
+/* 让整个容器居中排列 */
+.update-interval-container {
+  display: flex;
+  align-items: center;  /* 垂直居中 */
+  gap: 10px;  /* 控制元素之间的间距 */
+  margin-top: 20px;
+  margin-left: 90px;
+}
+
+/* 让输入框和按钮有更好的视觉效果 */
+#updateInterval {
+  width: 40px;  /* 控制输入框宽度 */
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* 让按钮更显眼，增加交互感 */
+button {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #007bff; /* 蓝色按钮 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #0056b3; /* 深蓝色，鼠标悬停时 */
 }

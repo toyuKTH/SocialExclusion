@@ -1,5 +1,30 @@
 // 启动 SuperCollider 服务器
+// (
+// s.waitForBoot({
+// 	b = Buffer.read(s, "C:/Users/Think/Desktop/background.wav");
+	/*b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");*/
+
+(
 s.waitForBoot({
+    // ✅ 确保文件路径正确
+    var path = "E:\backgroud.wav";
+    if (File.exists(path), {
+        b = Buffer.read(s, path);
+        s.sync;
+        "✅ Buffer 加载成功".postln;
+
+
+		(
+            Ndef(\drops, { |bufnum=0, rate=1, amp=0.5|
+                PlayBuf.ar(1, bufnum, rate, loop: 1, doneAction: Done.freeSelf) * amp ! 2
+            }).set(\bufnum, b.bufnum).play;
+            Ndef(\drops).fadeTime = 3;
+        );
+
+
+    }, {
+        "❌ 文件不存在，请检查路径".postln;
+    });
 
     // 🎵 定义巴松（Bassoon）合成器
     SynthDef(\bassoon, { |freq = 440, amp = 0.3, dur = 2|
@@ -14,12 +39,20 @@ s.waitForBoot({
         var sound = Saw.ar(freq) * env * amp;
         Out.ar(0, sound);
     }).add;
-
+	(
+		Ndef(\drops, { |bufnum=0, rate=1, amp=0.5|
+			PlayBuf.ar(1, bufnum, rate, loop: 1, doneAction: Done.freeSelf) * amp ! 2 }).set(\bufnum, b.bufnum).play;
+		Ndef(\drops).fadeTime = 3;
+	);
     // 🎧 监听 WebSocket 服务器发送的 OSC 消息
     OSCdef(\country_info, { |msg|
         var group = msg[1].asSymbol;  // 解析群体 (total, male, female)
         var value = msg[2].asFloat;   // 解析数值
-        var freq = value * 10;        // 计算频率
+        var freq = value * 15;        // 计算频率
+		var volume = -1 * value;
+		value.postln;
+		volume.dbamp.postln;
+		Ndef(\drops).set(\amp, volume.dbamp);
 
         // ✅ 确保频率有效，避免播放错误
         if (freq.isNaN or: { freq <= 0 }) {
@@ -45,6 +78,32 @@ s.waitForBoot({
 
     }, '/country_info');
 
+
+
+
+
+
+	 // ✅ 监听 OSC 消息，控制背景音乐播放/停止
+    OSCdef(\background_control, { |msg|
+        var command = msg[1].asSymbol;  // 解析前端发送的命令
+        command.postln; // 打印接收到的命令
+
+        if (command == \play) {
+            Ndef(\drops).play;
+            "▶️ 背景音乐播放".postln;
+        } {
+            if (command == \stop) {
+                Ndef(\drops).stop;
+                "⏹ 背景音乐停止".postln;
+            };
+        };
+    }, '/background_control');
+
     "✅ SuperCollider 服务器已启动，等待 OSC 消息...".postln;
 
 });
+)
+
+/*b = Buffer.read(s, Platform.resourceDir +/+ "sounds/a11wlk01.wav");*/
+
+

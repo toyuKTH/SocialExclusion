@@ -30,3 +30,9 @@
     background: white;
     border-top: 2px solid #ddd;
 }
+
+.year-label{
+    font-size: 20px;
+    background: white;
+    color:black;
+}

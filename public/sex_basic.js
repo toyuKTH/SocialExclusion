@@ -102,7 +102,7 @@ fetch('world.json')
                         // 获取当年年份和选中群体类型
                         // let year = currentYear;
                         // let selectedType = document.getElementById("data-type").value;
-                        // ✅ **初始化 lastSentYear，防止 setInterval 无法检测年份变化**
+                        //  **初始化 lastSentYear，防止 setInterval 无法检测年份变化**
                         // if (lastSentYear === null) {
                         //      lastSentYear = year;
                         // }
@@ -147,7 +147,7 @@ fetch('world.json')
                         }
                          //  **同步更新热力图**
                         updateHeatmap(year);
-                        console.log(`🔥 热力图更新至 ${year} 年`);
+                        console.log(` 热力图更新至 ${year} 年`);
 
                         lastSentYear = year;
                     }
@@ -339,24 +339,40 @@ document.addEventListener("DOMContentLoaded",function(){
     .catch(error => console.error("加载失败",error));
 })
 
-document.addEventListener("DOMContentLoaded", function () {
-    const bgSoundToggleBtn = document.getElementById("bgToggle");
-    const backgroundSound = document.getElementById("backgroundSound");
+// document.addEventListener("DOMContentLoaded", function () {
+//     const bgSoundToggleBtn = document.getElementById("bgToggle");
+//     const backgroundSound = document.getElementById("backgroundSound");
     
-    let isBgSoundOn = false; // 初始状态是关闭
+//     let isBgSoundOn = false; // 初始状态是关闭
 
-    bgSoundToggleBtn.addEventListener("click", function () {
-        if (!isBgSoundOn) {
-            backgroundSound.play();
-            bgSoundToggleBtn.textContent = "Turn Off";
-            bgSoundToggleBtn.classList.remove("off");
-        } else {
-            backgroundSound.pause();
-            bgSoundToggleBtn.textContent = "Turn On";
-            bgSoundToggleBtn.classList.add("off");
-        }
-        isBgSoundOn = !isBgSoundOn;
+//     bgSoundToggleBtn.addEventListener("click", function () {
+//         if (!isBgSoundOn) {
+//             backgroundSound.play();
+//             bgSoundToggleBtn.textContent = "Turn Off";
+//             bgSoundToggleBtn.classList.remove("off");
+//         } else {
+//             backgroundSound.pause();
+//             bgSoundToggleBtn.textContent = "Turn On";
+//             bgSoundToggleBtn.classList.add("off");
+//         }
+//         isBgSoundOn = !isBgSoundOn;
+//     });
+// });
+document.addEventListener("DOMContentLoaded",function(){
+    const bgToggleBtn = document.getElementById("bgToggle");
+    let isPlaying = false; // 记录背景音乐状态
+
+    bgToggleBtn.addEventListener("click", () => {
+        isPlaying = !isPlaying; // 切换播放状态
+        const command = isPlaying ? "play" : "stop";
+
+        // 发送 WebSocket 消息到 Node.js 服务器
+        ws.send(JSON.stringify({ type: "background_control", command }));
+
+        // 更新按钮文本
+        bgToggleBtn.textContent = isPlaying ? "Turn Off" : "Turn On";
     });
-});
+
+})
 
 

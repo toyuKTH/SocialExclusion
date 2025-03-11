@@ -18,7 +18,7 @@
             <!-- Tab 选项卡 -->
             <div class="tabs-container"> 
                 <div class="tabs">
-                    <button class="tab-button" onclick="window.location.href='index.html'">Past & Present Sound</button>
+                    <!-- <button class="tab-button" onclick="window.location.href='index.html'">Past & Present Sound</button> -->
                     <button class="tab-button" onclick="window.location.href='future.html'">Listen to the Future</button>
                 </div>
             </div>
@@ -50,6 +50,11 @@
                         <div class="year-label-container">
                             <span class="year-text">Current Year:</span>
                             <span id="current-year" class="year-label">2015</span>
+                        </div>
+                        <div class="update-interval-container">
+                            <label for="updateInterval">Update Interval (s)：</label>
+                            <input type="number" id="updateInterval" value="2" min="0.5" step="1">
+                            <button onclick="updateInterval()">setup</button>
                         </div>
                     </div>
                     <span id="max-year">2024</span>

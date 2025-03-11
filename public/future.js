@@ -27,7 +27,7 @@ map.on('load', function () {
                 ['get', 'name']
             ];
 
-            // 1️⃣ 处理欧盟国家（固定颜色）
+            //  处理欧盟国家（固定颜色）
             data.features.forEach(feature => {
                 let countryName = feature.properties.name;
                 if (euColors[countryName]) {
@@ -35,7 +35,7 @@ map.on('load', function () {
                 }
             });
 
-            // 2️⃣ 其他所有国家统一使用绿色
+            //  其他所有国家统一使用绿色
             paintProperties.push('#D5E8D4'); // 柔和绿色
 
             // 添加 `fill` 图层
