@@ -3,8 +3,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidG95dWt0aCIsImEiOiJjbTdmeDBkZjcwbGFyMmlzN21mM
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/light-v11',
-    center: [13, 55],  // 经度 13°E, 纬度 55°N，居中到欧洲中部附近
-    zoom: 3         // 适合显示整个欧盟的缩放级别
+    center: [0, 55],  // 经度 13°E, 纬度 55°N，居中到欧洲中部附近
+    zoom: 2.8         // 适合显示整个欧盟的缩放级别
 });
 
 //  连接 WebSocket
@@ -13,11 +13,12 @@ const ws = new WebSocket('ws://localhost:8080');
 ws.onopen = () => console.log(" WebSocket 连接成功");
 ws.onerror = (error) => console.error(" WebSocket 连接失败:", error);
 
+
 let heatmapData = null;
-
-
 let hoveredCountryId = null;
-let lastSentCountry = "none"; // 记录最后发送的国家，防止重复发送
+let lastSentCountry = "none"; 
+let currentYear = 2015; // 确保 currentYear 是全局变量
+let newCountryName = ""; // 确保 newCountryName 在全局作用域
 
 // 加载 `world.json`（国家边界数据）
 fetch('world.json')
@@ -67,20 +68,13 @@ fetch('world.json')
 
             console.log(" 国家边界已加载，等待鼠标交互...");
 
-            let lastSentCountry = null; // 记录上一次发送的国家
-            let lastSentYear = null; // 记录上一次发送的年份
-            let hoveredCountryId = null; // 记录当前悬停的国家ID
-
-            // 鼠标悬停时高亮国家并发送国家名到 SuperCollider
             map.on('mousemove', 'country-fills', function (e) {
                 const countryFeatures = e.features;
-
                 if (countryFeatures.length > 0) {
                     const newCountryId = countryFeatures[0].id;
-                    const newCountryName = countryFeatures[0].properties.name;
+                    newCountryName = countryFeatures[0].properties.name; // ✅ 确保 newCountryName 赋值
 
                     if (newCountryId !== hoveredCountryId) {
-                        // 取消之前国家的高亮状态
                         if (hoveredCountryId !== null) {
                             map.setFeatureState(
                                 { source: 'countries', id: hoveredCountryId },
@@ -88,10 +82,7 @@ fetch('world.json')
                             );
                         }
 
-                        // 更新 hoveredCountryId
                         hoveredCountryId = newCountryId;
-
-                        // 设置当前国家高亮
                         map.setFeatureState(
                             { source: 'countries', id: hoveredCountryId },
                             { hover: true }
@@ -99,62 +90,41 @@ fetch('world.json')
 
                         map.getCanvas().style.cursor = 'pointer';
 
-                        // 获取当年年份和选中群体类型
-                        // let year = currentYear;
-                        // let selectedType = document.getElementById("data-type").value;
-                        //  **初始化 lastSentYear，防止 setInterval 无法检测年份变化**
-                        // if (lastSentYear === null) {
-                        //      lastSentYear = year;
-                        // }
-
-                        // **确保只有在国家变化时才发送数据**
                         if (lastSentCountry !== newCountryName) {
                             if (ws.readyState === WebSocket.OPEN) {
-                                ws.send(JSON.stringify({ 
+                                ws.send(JSON.stringify({
                                     country: newCountryName,
                                     year: currentYear,
                                     group: document.getElementById("data-type").value
-                                 }));
+                                }));
                                 lastSentCountry = newCountryName;
-                                //记录已发送的年份
-                                lastSentYear = year;
-                                console.log(` 悬停在国家: ${newCountryName}, 正在播放对应声音`);
+                                lastSentYear = currentYear;
+                                console.log(`悬停在国家: ${newCountryName}, 正在播放对应声音`);
                             }
                         }
                     }
                 }
             });
 
-            //定期检查currentYear 是否变动
             setInterval(() => {
                 if (hoveredCountryId !== null && lastSentCountry !== null) {
                     let selectedType = document.getElementById("data-type").value;
-                    let year = currentYear;
-            
-                    // **如果年份变化，且国家未变，则重新发送数据**
-                    if (year !== lastSentYear) {
+
+                    if (currentYear !== lastSentYear) {
                         if (ws.readyState === WebSocket.OPEN) {
                             ws.send(JSON.stringify({
-                                country: lastSentCountry, // 使用之前悬停的国家
-                                year: year,
+                                country: lastSentCountry,
+                                year: currentYear,
                                 group: selectedType
                             }));
-
-                            
-                           
-                            console.log(` 年份变动: ${year}，重新发送数据（国家: ${lastSentCountry}, 群体: ${selectedType}）`);
-                            // lastSentYear = year; // 更新记录
+                            console.log(`年份变动: ${currentYear}，重新发送数据`);
                         }
-                         //  **同步更新热力图**
-                        updateHeatmap(year);
-                        console.log(` 热力图更新至 ${year} 年`);
-
-                        lastSentYear = year;
+                        updateHeatmap(currentYear);
+                        lastSentYear = currentYear;
                     }
                 }
-            }, 1000); // **每1秒检查一次年份**
+            }, 500);
 
-            // 鼠标离开国家时停止声音
             map.on('mouseleave', 'country-fills', function () {
                 if (hoveredCountryId !== null) {
                     map.setFeatureState(
@@ -165,23 +135,24 @@ fetch('world.json')
                 }
                 map.getCanvas().style.cursor = '';
 
-                // **确保只发送一次 "none"，避免重复请求**
                 if (lastSentCountry !== "none") {
                     if (ws.readyState === WebSocket.OPEN) {
-                        ws.send(JSON.stringify({ 
-                            country: newCountryName,
+                        ws.send(JSON.stringify({
+                            country: lastSentCountry,
                             year: currentYear,
                             group: document.getElementById("data-type").value
                         }));
                         lastSentCountry = "none";
-                        console.log("鼠标移出国家，停止播放声音");
+                        console.log(`鼠标移出国家: ${lastSentCountry}，停止播放声音`);
                     }
                 }
             });
 
         });
     })
-    .catch(error => console.error(" 加载 world.json 失败:", error));
+    .catch(error => console.error("加载 world.json 失败:", error));
+
+            
 
 
 
@@ -258,14 +229,30 @@ function updateHeatmap(year) {
 // **点击播放热力图**
 let isPlaying = false;
 let intervalId = null;
-let currentYear = 2015;
+// let currentYear = 2015;
 const minYear = 2015;
 const maxYear = 2024;
+
+let updateInterval = 2000;
+const InputString = document.getElementById("updateInterval");
+const SetupButton = document.getElementById("setupBtn");
+
+SetupButton.addEventListener("click",function(){
+    updateInterval = parseFloat(InputString.value)*1000; //把input的s转换为ms
+    //如果输入无效，默认间隔为2s;
+    if (isNaN(updateInterval) || updateInterval <= 0){
+        updateInterval = 2000;
+        console.log(`设置新的时间间隔：${updateInterval}`);
+    }
+
+
+});
 
 function togglePlayPause() {
     const button = document.getElementById("playPauseBtn");
     const timeline = document.getElementById("timeline");
     const yearLabel = document.getElementById("current-year");
+    
      
     if (isPlaying) {
         clearInterval(intervalId);
@@ -280,7 +267,7 @@ function togglePlayPause() {
             timeline.value = currentYear;
             yearLabel.innerText = currentYear;
             currentYear = (currentYear < maxYear) ? currentYear + 1 : minYear;
-        }, 2000);
+        }, updateInterval);
         
         console.log(" 热力图播放开始");
         button.innerHTML ="Pause";

@@ -6,6 +6,7 @@
     <title>Interactive Map</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="tabs.css">
+    <link rel="stylesheet" href="timeline.css">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.js"></script>
 </head>
@@ -14,22 +15,19 @@
     <!-- 标题 -->
     <header>
         <div class="header-container">
-            <h1 class="header-title">Poverty or Social Exclusion (EU)</h1>
-            <!-- Tab 选项卡 -->
-            <div class="tabs-container"> 
-                <div class="tabs">
-                    <!-- <button class="tab-button" onclick="window.location.href='index.html'">Past & Present Sound</button> -->
-                    <button class="tab-button" onclick="window.location.href='future.html'">Listen to the Future</button>
-                </div>
-            </div>
-            
+            <h1 class="header-title">Poverty or Social Exclusion (EU)</h1>   
         </div>
     </header>
 
     <!-- 主体布局：左侧（地图+时间轴） | 右侧（数据选择） -->
     <div class="main-container">
+        
+        <!-- 左侧区域 -->
         <div class="left-container">
+            <!-- 地图区域 -->
             <div id="map"></div>
+
+            <!-- 图例区域 -->
             <div id="legend" class="map-legend">
                 <div class="legend-title">Poverty or<br>Social Exclusion (%)</div>
                 <div class="legend-gradient"></div>
@@ -41,54 +39,74 @@
                     <span class="no-data-box"></span> No Data
                 </div>
             </div>
+
+            <!-- 时间轴区域 -->
             <div class="timeline-container">
-                <button id="playPauseBtn" class="play-btn">▶ Play</button>
+                <div class="year-label-container">
+                    <span class="year-text">Current Year:</span>
+                    <span id="current-year" class="year-label">2015</span>
+                </div>
+
                 <div class="slider-wrapper">
+                    <!-- 左侧 Play 按钮 -->
+                    <button id="playPauseBtn" class="play-btn">▶ Play</button>
+                    
+                    <!-- 年份范围 -->
                     <span id="min-year">2015</span>
+                    
+                    <!-- 滑块 -->
                     <div class="slider-container">
                         <input type="range" id="timeline" min="2015" max="2024" step="1" value="2015">
-                        <div class="year-label-container">
-                            <span class="year-text">Current Year:</span>
-                            <span id="current-year" class="year-label">2015</span>
-                        </div>
-                        <div class="update-interval-container">
-                            <label for="updateInterval">Update Interval (s)：</label>
-                            <input type="number" id="updateInterval" value="2" min="0.5" step="1">
-                            <button onclick="updateInterval()">setup</button>
-                        </div>
                     </div>
+
+                    <!-- 右侧 2024 和 Listen to the Future 按钮 -->
                     <span id="max-year">2024</span>
+                    <button class="future-button" onclick="window.location.href='future.html'">Listen to the Future ▶</button>
                 </div>
-            </div>
-        </div>
+
+                <!-- 显示当前年份和更新时间设置 -->
+                <div class="year-update-container">
+                    <div class="update-interval-container">
+                        <label for="updateInterval">Update Interval (s)：</label>
+                        <input type="number" id="updateInterval" value="2" min="0.5" step="0.5">
+                        <button id="setupBtn">setup</button>
+                    </div>
+                </div>
+            </div> 
+        </div> <!-- **关闭 `left-container`，确保 `control-panel` 不会嵌套错误** -->
+
+        <!-- 右侧区域 -->
         <div class="control-panel">
             <h2>View Different Groups</h2>
-            <label for="data-type">Select Group:</label>
+            <!-- <label for="data-type">Select Group:</label> -->
             <select id="data-type">
                 <option value="total" selected>Total</option>
                 <option value="female">Female</option>
                 <option value="male">Male</option>
             </select>
+
             <div class="audio-icons">
                 <div class="audio-row">
                     <img src="src/female.png" alt="female" class="gender-icon">
                     <button id="sound1-btn" type="button">
-                        <img src="src/icon1.png" alt="Sound 1" class="icon">
+                        <img src="src/volume.png" alt="Sound 1" class="icon">
                     </button>
                 </div>
                 <div class="audio-row">
                     <img src="src/male.png" alt="male" class="gender-icon">
                     <button id="sound2-btn" type="button">
-                        <img src="src/icon1.png" alt="Sound 2" class="icon">
+                        <img src="src/volume.png" alt="Sound 2" class="icon">
                     </button>
                 </div>
+
                 <div class="background-sound-container">
                     <span>Background Sound</span>
-                    <button id="bgToggle" class="toggle-btn">Turn On</button>
+                    <button id="bgToggle" class="toggle-btn">Turn Off</button>
                 </div>
             </div>
-        </div>
-    </div>
+        </div> <!-- **右侧 `control-panel` 结构没有问题** -->
+
+    </div> <!-- **关闭 `main-container`，确保整体结构完整** -->
 
     <!-- 音频文件 -->
     <audio id="sound1" src="src/sound1.wav"></audio>
@@ -97,5 +115,6 @@
     
     <!-- 引入 JavaScript -->
     <script src="sex_basic.js"></script>
+
 </body>
 </html>

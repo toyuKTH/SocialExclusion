@@ -1,0 +1,179 @@
+/* ----------------------------
+   时间轴区域 CSS（独立文件）
+---------------------------- */
+
+/* 时间轴整体容器 */
+.timeline-container {
+    display: flex;
+    flex-direction: column; /* 让子元素垂直排列 */
+    align-items: center;
+    /* gap: 0px;  */
+    padding: 5px 20px;
+    background: #6f6f70;
+    border-top: 2px solid #ddd;
+    height: 180px; /* 增加高度，确保 Current Year 有空间 */
+    box-sizing: border-box;
+}
+
+  /* 播放按钮 */
+  .play-btn {
+    background-color:antiquewhite;
+    color:#d24a29 ;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    min-width: 70px;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+  }
+  
+
+
+/* "当前年份" 显示在时间轴上方 */
+.year-update-container {
+    display: flex;
+    flex-direction: column;  /* 让年份和更新时间纵向排列 */
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 5px;
+    margin-bottom: 5px; /* 与时间轴分开一点 */
+    order: 1; /* 让它排在时间轴上方 */
+}
+
+/* 年份标签 */
+.year-label-container {
+    
+    color:aliceblue;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 2px 5px;
+}
+
+/* 显示年份的蓝色标签 */
+.year-label {
+    background: #d24a29;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* ----------------------------
+   时间轴（Slider）
+---------------------------- */
+.slider-wrapper {
+    display: flex;               
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    max-width: 800px;
+    width: 100%; 
+}
+
+.slider-container {
+    position: relative;
+    flex: 1;
+}
+
+/* 时间轴滑块 */
+#timeline {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #ccc;
+    height: 6px;
+    border-radius: 5px;
+    outline: none;
+    pointer-events: none; /* 禁止所有鼠标交互 */
+    cursor: not-allowed;  /* 鼠标变成禁止符号 */
+}
+
+#timeline::-webkit-slider-runnable-track {
+    height: 6px;
+    background:#ccc;
+    border-radius: 5px;
+}
+
+#timeline::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background:#d24a29;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px;
+}
+
+/* ----------------------------
+   更新时间区域
+---------------------------- */
+.update-interval-container {
+    color: aliceblue;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* 时间间隔输入框 */
+#updateInterval {
+    width: 50px;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+    text-align: center;
+    border:none;
+}
+
+#setupBtn {
+    padding: 6px 12px;
+    font-size: 14px;
+    background-color:antiquewhite;
+    color:#d24a29;
+    border-radius: 5px;
+    cursor: pointer;
+    border:none;
+    transition: background 0.2s ease-in-out; 
+}
+
+
+/* ----------------------------
+   Listen to the Future 按钮
+---------------------------- */
+.future-button {
+    background-color:antiquewhite;
+    color:#d24a29;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+
+/* "最大年份" 样式 */
+#max-year {
+    font-size: 15px; /* 调整字号 */
+    font-weight: bold; /* 加粗 */
+    color:aliceblue; /* 文字颜色 */
+    padding: 5px;
+}
+/* "最大年份" 样式 */
+#min-year {
+    font-size: 15px; /* 调整字号 */
+    font-weight: bold; /* 加粗 */
+    color:aliceblue; /* 文字颜色 */
+    padding: 5px;
+}

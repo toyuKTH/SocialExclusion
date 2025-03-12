@@ -1,38 +1,83 @@
-.main-container {
+/* ----------------------------
+   未来页面全局 CSS
+---------------------------- */
+
+/* 页面整体布局 */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: calc(100vh - 60px); /* 减去 header 高度 */
     overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
 }
 
-.full-width-container {
-    flex: 1;
+/* 标题区域 */
+.header-container {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-#map {
-    flex: 1;
-    width: 100%;
-    height: 100%;
-    min-height: 600px; /* 让地图占满页面 */
-}
-
-.timeline-container {
-    height: 120px;
-    min-height: 120px;
-    max-height: 120px;
-    display: flex;
-    justify-content: center;
+    justify-content:space-between;  
     align-items: center;
+    padding: 0 20px;
+    height: 50px;
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #ddd;
+  }
+
+  .header-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    margin: 0;
+  }
+
+/* 未来页面的地图区域 */
+#map {
+    flex-grow: 1;
+    width: 100%;
+    height: calc(100vh - 200px); /* 预留标题和时间轴空间 */
+    background-color: lightgray;
+}
+
+/* 未来页面的时间轴区域 */
+.timeline-container {
+    display: flex;
+    flex-direction: column; /* 让子元素垂直排列 */
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
     background: white;
     border-top: 2px solid #ddd;
+    height: 100px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
-.year-label{
-    font-size: 20px;
-    background: white;
-    color:black;
+/* "未来年份" 标签样式 */
+.year-label {
+    background: #007BFF;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 150px;
+    text-align: center;
+    border: 2px solid white;
+}
+
+
+/* 未来页面的播放按钮 */
+.play-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
