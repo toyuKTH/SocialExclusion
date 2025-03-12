@@ -99,7 +99,7 @@ fetch('world.json')
                                 }));
                                 lastSentCountry = newCountryName;
                                 lastSentYear = currentYear;
-                                console.log(`悬停在国家: ${newCountryName}, 正在播放对应声音`);
+                                console.log(`悬停在国家: ${newCountryName},年份：${currentYear} 正在播放对应声音`);
                             }
                         }
                     }
@@ -107,10 +107,11 @@ fetch('world.json')
             });
 
             setInterval(() => {
+                let year = currentYear;
                 if (hoveredCountryId !== null && lastSentCountry !== null) {
                     let selectedType = document.getElementById("data-type").value;
 
-                    if (currentYear !== lastSentYear) {
+                    if (year !== lastSentYear) {
                         if (ws.readyState === WebSocket.OPEN) {
                             ws.send(JSON.stringify({
                                 country: lastSentCountry,
@@ -120,7 +121,7 @@ fetch('world.json')
                             console.log(`年份变动: ${currentYear}，重新发送数据`);
                         }
                         updateHeatmap(currentYear);
-                        lastSentYear = currentYear;
+                        lastSentYear = year;
                     }
                 }
             }, 500);
@@ -149,6 +150,25 @@ fetch('world.json')
             });
 
         });
+        map.on('click', 'country-fills', function (e) {
+            if (!isPlaying) {  // **只有在播放暂停时才发送**
+                const countryFeatures = e.features;
+                if (countryFeatures.length > 0) {
+                    const clickedCountryName = countryFeatures[0].properties.name;
+                    const selectedType = document.getElementById("data-type").value;
+                    
+                    if (ws.readyState === WebSocket.OPEN) {
+                        ws.send(JSON.stringify({
+                            country: clickedCountryName,
+                            year: currentYear,  
+                            group: selectedType
+                        }));
+                        console.log(`点击国家: ${clickedCountryName}, 年份: ${currentYear - 1}, 发送声音请求`);
+                    }
+                }
+            }
+        });
+        
     })
     .catch(error => console.error("加载 world.json 失败:", error));
 
@@ -260,12 +280,16 @@ function togglePlayPause() {
         button.innerHTML = "Start";
     } else {
         intervalId = setInterval(() => {
-            updateHeatmap(currentYear);
+            
             console.log(` 显示 ${currentYear} 年`);
 
             //时间轴更新
             timeline.value = currentYear;
             yearLabel.innerText = currentYear;
+
+            //再渲染热力图
+            // updateHeatmap(currentYear);
+            //再更新年份
             currentYear = (currentYear < maxYear) ? currentYear + 1 : minYear;
         }, updateInterval);
         
@@ -276,7 +300,7 @@ function togglePlayPause() {
 }
 document.getElementById("playPauseBtn").addEventListener("click", togglePlayPause);
 document.getElementById("data-type").addEventListener("change",function(){
-    updateHeatmap(currentYear);
+    // updateHeatmap(currentYear);
 })
 
 //startAutoPlay(); // **页面加载后，自动播放热力图**
