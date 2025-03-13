@@ -2,9 +2,11 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidG95dWt0aCIsImEiOiJjbTdmeDBkZjcwbGFyMmlzN21mM
 
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v11',
+    style: 'mapbox://styles/toyukth/cm867tagw007l01sbfsxo1c7m',
+    
+
     center: [13, 55],  // 经度 13°E, 纬度 55°N，居中到欧洲中部附近
-    zoom: 3         // 适合显示整个欧盟的缩放级别
+    zoom: 2.8       // 适合显示整个欧盟的缩放级别
 });
 
 map.on('load', function () {
@@ -36,7 +38,7 @@ map.on('load', function () {
             });
 
             //  其他所有国家统一使用绿色
-            paintProperties.push('#D5E8D4'); // 柔和绿色
+            paintProperties.push('rgba(0,0,0,0)'); // 柔和绿色
 
             // 添加 `fill` 图层
             map.addLayer({
@@ -45,7 +47,8 @@ map.on('load', function () {
                 'source': 'countries',
                 'paint': {
                     'fill-color': paintProperties,
-                    'fill-outline-color': '#AAAAAA' // **边界颜色**
+                    // 'fill-outline-color': '#AAAAAA' ,// **边界颜色**
+                    'fill-opacity': 0.8
                 }
             });
 
@@ -54,50 +57,61 @@ map.on('load', function () {
         .catch(error => console.error("Error loading world.json:", error));
 });
 
+
 const euColors = {
-    'Austria': '#FF8A80',       // 柔和红
-    'Belgium': '#FFB74D',       // 亮橙
-    'Bulgaria': '#FFD54F',      // 柔和黄
-    'Croatia': '#81C784',       // 活力绿
-    'Cyprus': '#64B5F6',        // 亮蓝
-    'Czech Republic': '#9575CD',// 活力紫
-    'Denmark': '#E57373',       // 柔和红
-    'Estonia': '#FFB74D',       // 亮橙
-    'Finland': '#FFD54F',       // 柔和黄
-    'France': '#66BB6A',        // 活力绿
-    'Germany': '#42A5F5',       // 活力蓝
-    'Greece': '#BA68C8',        // 活力紫
-    'Hungary': '#EF5350',       // 深红
-    'Ireland': '#FFA726',       // 深橙
-    'Italy': '#FFEB3B',         // 深黄
-    'Latvia': '#4CAF50',        // 深绿
-    'Lithuania': '#2196F3',     // 深蓝
-    'Luxembourg': '#8E24AA',    // 深紫
-    'Malta': '#D32F2F',         // 红
-    'Netherlands': '#FB8C00',   // 深橙
-    'Poland': '#FDD835',        // 深黄
-    'Portugal': '#2E7D32',      // 深绿
-    'Romania': '#1565C0',       // 深蓝
-    'Slovakia': '#6A1B9A',      // 深紫
-    'Slovenia': '#E64A19',      // 柔和红
-    'Spain': '#FF9800',         // 柔和橙
-    'Sweden': '#FFEE58'         // 柔和黄
+    'Germany': '#EC4229',       // 1
+    'Austria': '#D1A028',       // 2
+    'France': '#2D9A47',        // 3
+    'Czech Republic': '#FBB70D',// 绿色
+    'Slovakia': '#C12034',      // 红色
+    'Hungary': '#005586',       // 绿色
+    'Italy': '#3DAE46',         // 红色
+    'Switzerland': '#DE1982',   // 3
+    'Belgium': '#4C9F38',       // 绿色
+    'Poland': '#DDA63A',        // 橙色
+    'Slovenia': '#3DAE46',      // 1
+    'Luxembourg': '#C5192D',    // 深红色
+    'Bulgaria': '#E5243B',      // 红色
+    'Croatia': '#EC4229',       // 2
+    'Netherlands': '#DDA63A',   // 橙色
+    'Romania': '#DDA63A',       // 橙色
+    'Serbia': '#DDA63A',        // 橙色
+    'Latvia': '#E5243B',        // 红色
+    'Spain': '#46763A',         // 4
+    'Lithuania': '#3DAE46',     // 1
+    'Greece': '#DDA63A',        // 橙色
+    'Denmark': '#DDA63A',       // 橙色
+    'Estonia': '#EC4229',       // 2
+    'Finland': '#DE1982',       // 3
+    'Sweden': '#DDA63A',        // 橙色
+    'Portugal': '#46763A',      // 4
+    'Cyprus': '#E5243B',        // 红色
+    'Ireland': '#3DAE46',       // 1
+    'Malta': '#4C9F38'          // 绿色
 };
+
 
 //控制播放声音
 document.addEventListener("DOMContentLoaded", function () {
     const playPauseBtn = document.getElementById("playPauseBtn");
     const futureSound = document.getElementById("futureSound");
 
-    let isPlaying = false;
+    let isPlaying = true;
+
+    //页面加载时自动播放
+    futureSound.play().then(() => {
+        playPauseBtn.textContent = "⏸ Pause";
+    }).catch(error =>{
+        console.warn(`自动播放失败`,error);
+    });
 
     playPauseBtn.addEventListener("click", function () {
-        if (!isPlaying) {
-            futureSound.play();
-            playPauseBtn.textContent = "⏸ Pause";
-        } else {
+        if (isPlaying) {
             futureSound.pause();
             playPauseBtn.textContent = "▶ Play";
+        } else {
+            futureSound.play();
+            playPauseBtn.textContent = "⏸ Pause";
         }
         isPlaying = !isPlaying;
     });

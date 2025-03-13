@@ -30,14 +30,14 @@ s.waitForBoot({
     SynthDef(\bassoon, { |freq = 440, amp = 0.3, dur = 2|
         var env = EnvGen.kr(Env.perc(0.1, dur), doneAction: 2);
         var sound = VarSaw.ar(freq, 0, 0.4) * env * amp;
-        Out.ar(0, sound);
+		Out.ar(0, [sound,sound]);
     }).add;
 
     // 🎺 定义小号（Trumpet）合成器
     SynthDef(\trumpet, { |freq = 440, amp = 0.3, dur = 2|
         var env = EnvGen.kr(Env.perc(0.05, dur), doneAction: 2);
         var sound = Saw.ar(freq) * env * amp;
-        Out.ar(0, sound);
+		Out.ar(0, [sound,sound]);
     }).add;
 	(
 		Ndef(\drops, { |bufnum=0, rate=1, amp=0.5|

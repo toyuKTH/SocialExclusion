@@ -12,18 +12,19 @@ html, body {
     flex-direction: column;
     overflow: hidden;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color:white;
 }
 
 /* 标题区域 */
 .header-container {
+    /* color: red; */
     display: flex;
     justify-content:space-between;  
     align-items: center;
     padding: 0 20px;
     height: 50px;
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #ddd;
+    background-color: #2D9A47;
+    /* border-bottom: 2px solid #ddd; */
   }
 
   .header-title {
@@ -32,52 +33,72 @@ html, body {
     transform: translateX(-50%);
     text-align: center;
     margin: 0;
+    color:beige;
   }
 
 /* 未来页面的地图区域 */
 #map {
     flex-grow: 1;
     width: 100%;
-    height: calc(100vh - 200px); /* 预留标题和时间轴空间 */
-    background-color: lightgray;
+    height: calc(100vh - 150px); /* 预留时间轴 */
+    background-color: white;
 }
 
 /* 未来页面的时间轴区域 */
 .timeline-container {
     display: flex;
-    flex-direction: column; /* 让子元素垂直排列 */
+    flex-direction: row; 
     align-items: center;
     gap: 10px;
     padding: 15px 20px;
-    background: white;
-    border-top: 2px solid #ddd;
+    background: #2D9A47;
+    /* border-top: 2px solid #ddd; */
     height: 100px;
     box-sizing: border-box;
     width: 100%;
+    justify-content: center;
 }
 
 /* "未来年份" 标签样式 */
 .year-label {
-    background: #007BFF;
-    color: white;
+    /* background: #007BFF; */
+    color:beige;
     padding: 8px 12px;
     border-radius: 8px;
     font-size: 18px;
     font-weight: bold;
     min-width: 150px;
     text-align: center;
-    border: 2px solid white;
+    /* border: 2px solid white; */
 }
 
 
 /* 未来页面的播放按钮 */
 .play-btn {
-    background-color: #007BFF;
-    color: white;
+    background-color:white;
+    color:green;
     border: none;
     border-radius: 8px;
     padding: 10px 15px;
     cursor: pointer;
     font-size: 16px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tab-button {
+    color: white;
+    font-family:'Arial Black', sans-serif;
+    padding: 8px 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 13px;
+    border-radius: 5px;
+    text-decoration: underline solid 2px;
+    margin-left: 50px;
+}
+
+.tabs {
+    display: flex;
+    gap: 15px;
 }

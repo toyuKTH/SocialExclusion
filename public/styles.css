@@ -120,7 +120,7 @@ html, body {
 /* legend */
 .map-legend {
   position: absolute;
-  bottom: 120px;  /* 调整到地图左下角 */
+  bottom: 170px;  /* 调整到地图左下角 */
   /* left: 10px; */
   background: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -194,9 +194,4 @@ html, body {
 /* 关闭状态的按钮（Turn Off） */
 .toggle-btn.off {
   background-color: #888 !important;  /* 确保灰色生效 */
-}
-
-/* 鼠标悬停效果 */
-.toggle-btn:hover {
-  background-color: #0056b3 !important; /* 更深的蓝色 */
 }

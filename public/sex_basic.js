@@ -288,7 +288,7 @@ function togglePlayPause() {
             yearLabel.innerText = currentYear;
 
             //再渲染热力图
-            // updateHeatmap(currentYear);
+            updateHeatmap(currentYear);
             //再更新年份
             currentYear = (currentYear < maxYear) ? currentYear + 1 : minYear;
         }, updateInterval);
@@ -300,7 +300,7 @@ function togglePlayPause() {
 }
 document.getElementById("playPauseBtn").addEventListener("click", togglePlayPause);
 document.getElementById("data-type").addEventListener("change",function(){
-    // updateHeatmap(currentYear);
+    updateHeatmap(currentYear);
 })
 
 //startAutoPlay(); // **页面加载后，自动播放热力图**
