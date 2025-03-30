@@ -8,7 +8,9 @@ const map = new mapboxgl.Map({
 });
 
 //  连接 WebSocket
-const ws = new WebSocket('ws://localhost:8080');
+// const ws = new WebSocket('ws://localhost:8080');
+const socket = new WebSocket("wss://hip-shoes-guess.loca.lt");
+
 
 ws.onopen = () => console.log(" WebSocket 连接成功");
 ws.onerror = (error) => console.error(" WebSocket 连接失败:", error);
@@ -21,7 +23,7 @@ let currentYear = 2015; // 确保 currentYear 是全局变量
 let newCountryName = ""; // 确保 newCountryName 在全局作用域
 
 // 加载 `world.json`（国家边界数据）
-fetch('world.json')
+fetch('new_world.json')
     .then(response => response.json())
     .then(data => {
         console.log(" world.json 加载成功！");
