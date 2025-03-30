@@ -8,13 +8,13 @@ const app = express();
 const PORT = 3000;
 const WSS_PORT = 8080;
 
-//读取sex_data.json
-const dataFilePath = path.join(__dirname, '../public/sex_data.json'); 
+//  改为读取根目录下的 sex_data.json
+const dataFilePath = path.join(__dirname, '../sex_data.json'); 
 const sexData = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
 
-// 提供静态文件
-app.use(express.static(path.join(__dirname, '../public')));
-app.listen(PORT, () => console.log(` 前端服务器运行在: http://localhost:${PORT}`));
+// 改为提供根目录的静态文件
+app.use(express.static(path.join(__dirname, '..')));
+app.listen(PORT, () => console.log(`前端服务器运行在: http://localhost:${PORT}`));
 
 // 启动 WebSocket 服务器
 const wss = new WebSocket.Server({ port: WSS_PORT });
