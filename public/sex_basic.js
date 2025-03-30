@@ -1,4 +1,4 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoidG95dWt0aCIsImEiOiJjbTdmeDBkZjcwbGFyMmlzN21mMnNpOXFjIn0.zGMyKcpb-gjpdyhgG-vBSA';
+mapboxgl.accessToken = 'pk.eyJ1IjoidG95dWt0aCIsImEiOiJjbTdmeDRtZmswbW5yMmpxenN1cGdtMnN1In0.hzy7P7NJDCSYkc9gsunmyw';
 
 const map = new mapboxgl.Map({
     container: 'map',
@@ -8,8 +8,7 @@ const map = new mapboxgl.Map({
 });
 
 //  连接 WebSocket
-// const ws = new WebSocket('ws://localhost:8080');
-const socket = new WebSocket("wss://hip-shoes-guess.loca.lt");
+const ws = new WebSocket('ws://localhost:8080');
 
 
 ws.onopen = () => console.log(" WebSocket 连接成功");
