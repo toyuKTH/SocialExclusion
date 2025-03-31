@@ -16,7 +16,7 @@ const sexData = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
 app.use(express.static(path.join(__dirname, '..')));
 app.listen(PORT, () => console.log(`前端服务器运行在: http://localhost:${PORT}`));
 
-// 启动 WebSocket 服务器
+// 启动 WebSocket 服务器，Port 57121 is used to receive osc messages from external programs
 const wss = new WebSocket.Server({ port: WSS_PORT });
 console.log(` WebSocket 服务器运行在 ws://localhost:${WSS_PORT}`);
 
@@ -28,7 +28,7 @@ const udpPort = new osc.UDPPort({
 udpPort.open();
 udpPort.on("ready", () => console.log(" OSC 服务器 (SuperCollider) 已准备好，监听端口 57121"));
 
-//WebSocket监听前端发送的数据
+//WebSocket监听前端发送的数据，Port 57120 is used to send osc messages to external programs
 wss.on('connection', (ws) => {
     console.log(" WebSocket 客户端已连接");
 

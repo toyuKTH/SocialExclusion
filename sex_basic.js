@@ -9,6 +9,8 @@ const map = new mapboxgl.Map({
 
 //  连接 WebSocket
 const ws = new WebSocket('ws://localhost:8080');
+//By using localtunnel to expose your local server, replace 'https' with 'wss'
+// const ws = new WebSocket('wss://ninety-pigs-design.loca.lt');
 
 
 ws.onopen = () => console.log(" WebSocket 连接成功");
