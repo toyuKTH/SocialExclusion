@@ -40,3 +40,16 @@ lt --port 8080
 ```js
 const ws = new WebSocket("wss://your-subdomain.loca.lt");
 ```
+### 3. Port Usage
+
+This project uses the following ports:
+
+| Port | Purpose          |
+|------|------------------|
+| 3000 | HTTP web server (serves the frontend) |
+| 8080 | WebSocket server (real-time interaction) |
+| 57120 | OSC messages sent to SuperCollider/Max |
+| 57121 | OSC listener port (optional, for feedback) |
+
+**Note:** These ports are for local development only. Make sure to secure them properly when deploying online.
+
