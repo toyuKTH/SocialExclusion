@@ -38,5 +38,5 @@ lt --port 8080
 
 4. Replace the WebSocket URL in your code with your own tunnel address:
 ```js
-const socket = new WebSocket("wss://your-subdomain.loca.lt");
+const ws = new WebSocket("wss://your-subdomain.loca.lt");
 ```
